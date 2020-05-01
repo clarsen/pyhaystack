@@ -59,6 +59,7 @@ class SyncHttpClient(HTTPClient):
         try:
             try:
                 try:
+                    self._session.cookies.clear()
                     response = self._session.request(
                         method=method,
                         url=uri,

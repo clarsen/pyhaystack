@@ -538,11 +538,18 @@ class HaystackSession(object):
         else:
             # Better be valid!
             str_rng = rng
+        grid = hszinc.Grid()
+        grid.metadata["id"] = self._obj_to_ref(point)
+        # grid.column["id"] = self._obj_to_ref(point)
+        grid.column["id"] = {}
+        grid.column["range"] = {}
+        grid.append({"id": self._obj_to_ref(point), "range": str_rng})
 
-        return self._get_grid(
+        return self._post_grid(
             "hisRead",
+            grid,
             callback,
-            args={"id": self._obj_to_ref(point), "range": str_rng},
+            # args={"id": self._obj_to_ref(point), "range": str_rng},
             **kwargs
         )
 

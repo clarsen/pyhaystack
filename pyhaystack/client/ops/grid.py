@@ -314,6 +314,8 @@ class BaseGridOperation(BaseAuthOperation):
             def _check_err(grid):
                 try:
                     if "err" in grid.metadata:
+                        import pdb
+                        pdb.set_trace()
                         raise HaystackError(
                             grid.metadata.get("dis", "Unknown Error"),
                             grid.metadata.get("traceback", None),
@@ -406,8 +408,13 @@ class PostGridOperation(BaseGridOperation):
             session=session, uri=uri, args=args, **kwargs
         )
 
-        # Convert the grids to their native format
-        self._body = hszinc.dump(grid, mode=post_format).encode("utf-8")
+        if grid is not None:
+            # Convert the grids to their native format
+            # self._headers.pop('Cookie')
+            self._body = hszinc.dump(grid, mode=post_format).encode("utf-8")
+        else:
+            self._body = None
+
         if post_format == hszinc.MODE_ZINC:
             self._content_type = "text/zinc"
         else:
@@ -424,6 +431,7 @@ class PostGridOperation(BaseGridOperation):
                 body_type=self._content_type,
                 params=self._args,
                 headers=self._headers,
+                cookies={},
                 callback=self._on_response,
                 accept_status=self._accept_status,
             )
