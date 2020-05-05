@@ -314,8 +314,6 @@ class BaseGridOperation(BaseAuthOperation):
             def _check_err(grid):
                 try:
                     if "err" in grid.metadata:
-                        import pdb
-                        pdb.set_trace()
                         raise HaystackError(
                             grid.metadata.get("dis", "Unknown Error"),
                             grid.metadata.get("traceback", None),

@@ -549,7 +549,6 @@ class HaystackSession(object):
             "hisRead",
             grid,
             callback,
-            # args={"id": self._obj_to_ref(point), "range": str_rng},
             **kwargs
         )
 
