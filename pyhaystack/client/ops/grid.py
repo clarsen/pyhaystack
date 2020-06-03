@@ -338,6 +338,7 @@ class BaseGridOperation(BaseAuthOperation):
         except:  # Catch all exceptions for the caller.
             self._log.debug("Parse fails", exc_info=1)
             self._state_machine.exception(result=AsynchronousException())
+            open("badparseinput.txt", "w").write(body)
 
 
 class GetGridOperation(BaseGridOperation):
