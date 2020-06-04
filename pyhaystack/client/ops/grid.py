@@ -296,6 +296,7 @@ class BaseGridOperation(BaseAuthOperation):
             # What format grid did we get back?
             content_type = response.content_type
             body = response.text
+            open("grid-response.txt", "w").write(body)
 
             if content_type in ("text/zinc", "text/plain"):
                 # We have been given a grid in ZINC format.
