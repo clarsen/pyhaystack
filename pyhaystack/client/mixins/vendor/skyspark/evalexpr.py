@@ -6,6 +6,7 @@ Skyspark allows custom functions to be called by a eval op
 This is a BETA function that will need to be tested by users
 
 """
+import hszinc
 
 
 class EvalOpsMixin(object):
@@ -37,6 +38,13 @@ class EvalOpsMixin(object):
 
         url = "eval?expr=%s" % arg_expr
         return self._get_grid(url, callback=lambda *a, **k: None)
+
+    def post_eval(self, arg_expr):
+        url = "eval"
+        eval_grid = hszinc.Grid()
+        eval_grid.column["expr"] = {}
+        eval_grid.append({"expr": arg_expr})
+        return self._post_grid(url, eval_grid, callback=lambda *a, **k: None)
 
 
 #    ===========================
