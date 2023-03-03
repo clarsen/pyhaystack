@@ -61,7 +61,7 @@ class SkysparkScramAuthenticateOperation(state.HaystackOperation):
         self._server_iterations = None
         self._auth_token = None
         self._auth = None
-        self._auth_path = "/api/lbnl"
+        self._auth_path = "/api/lbnl/about"
 
         self._login_uri = "%s" % (session._client.uri)
         self._state_machine = fysom.Fysom(
