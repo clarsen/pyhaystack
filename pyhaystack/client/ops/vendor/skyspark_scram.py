@@ -61,6 +61,7 @@ class SkysparkScramAuthenticateOperation(state.HaystackOperation):
         self._server_iterations = None
         self._auth_token = None
         self._auth = None
+        self._auth_path = "/api/lbnl"
 
         self._login_uri = "%s" % (session._client.uri)
         self._state_machine = fysom.Fysom(
@@ -103,7 +104,7 @@ class SkysparkScramAuthenticateOperation(state.HaystackOperation):
         """
         try:
             self._session._get(
-                "%s/api" % self._login_uri,
+                "%s%s" % (self._login_uri, self._auth_path),
                 callback=self._on_new_session,
                 cookies={},
                 headers={},
@@ -131,7 +132,7 @@ class SkysparkScramAuthenticateOperation(state.HaystackOperation):
 
         try:
             self._session._get(
-                "%s/api" % self._login_uri,
+                "%s%s" % (self._login_uri, self._auth_path),
                 callback=self._validate_hs_token,
                 headers={"Authorization": self.client_first_message},
                 exclude_cookies=True,
@@ -174,7 +175,7 @@ class SkysparkScramAuthenticateOperation(state.HaystackOperation):
         try:
             # Post
             self._session._get(
-                "%s/api" % self._login_uri,
+                "%s%s" % (self._login_uri, self._auth_path),
                 callback=self._validate_sec_msg,
                 headers={"Authorization": authMsg},
                 exclude_cookies=True,
@@ -247,7 +248,7 @@ class SkysparkScramAuthenticateOperation(state.HaystackOperation):
 
         try:
             self._session._get(
-                "%s/api" % self._login_uri,
+                "%s%s" % (self._login_uri, self._auth_path),
                 callback=self._validate_server_token,
                 headers={"Authorization": final_msg},
                 exclude_cookies=True,
