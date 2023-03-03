@@ -103,7 +103,7 @@ class SkysparkScramAuthenticateOperation(state.HaystackOperation):
         """
         try:
             self._session._get(
-                "%s/user/login" % self._login_uri,
+                "%s/api" % self._login_uri,
                 callback=self._on_new_session,
                 cookies={},
                 headers={},
@@ -131,7 +131,7 @@ class SkysparkScramAuthenticateOperation(state.HaystackOperation):
 
         try:
             self._session._get(
-                "%s/ui" % self._login_uri,
+                "%s/api" % self._login_uri,
                 callback=self._validate_hs_token,
                 headers={"Authorization": self.client_first_message},
                 exclude_cookies=True,
@@ -174,7 +174,7 @@ class SkysparkScramAuthenticateOperation(state.HaystackOperation):
         try:
             # Post
             self._session._get(
-                "%s/ui" % self._login_uri,
+                "%s/api" % self._login_uri,
                 callback=self._validate_sec_msg,
                 headers={"Authorization": authMsg},
                 exclude_cookies=True,
@@ -247,7 +247,7 @@ class SkysparkScramAuthenticateOperation(state.HaystackOperation):
 
         try:
             self._session._get(
-                "%s/ui" % self._login_uri,
+                "%s/api" % self._login_uri,
                 callback=self._validate_server_token,
                 headers={"Authorization": final_msg},
                 exclude_cookies=True,
