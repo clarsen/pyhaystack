@@ -147,7 +147,11 @@ class SkysparkScramAuthenticateOperation(state.HaystackOperation):
             if e.status != 401 and e.status != 303:
                 raise
             try:
-                server_response = e.headers["WWW-Authenticate"]
+                server_response = e.headers.get("WWW-Authenticate")
+                if not server_response:
+                    server_response = e.headers.get("www-authenticate")
+                if not server_response:
+                    raise Exception("WWW-Authenticate/www-authenticate not returned")
                 header_response = server_response.split(",")
                 algorithm = scram.regex_after_equal(header_response[1])
                 algorithm_name = algorithm.replace("-", "").lower()
@@ -191,7 +195,11 @@ class SkysparkScramAuthenticateOperation(state.HaystackOperation):
             if e.status != 401 and e.status != 303:
                 raise
             try:
-                header_response = e.headers["WWW-Authenticate"]
+                server_response = e.headers.get("WWW-Authenticate")
+                if not server_response:
+                    server_response = e.headers.get("www-authenticate")
+                if not server_response:
+                    raise Exception("WWW-Authenticate/www-authenticate not returned")
                 tab_header = header_response.split(",")
                 server_data = scram.regex_after_equal(tab_header[0])
                 missing_padding = len(server_data) % 4
