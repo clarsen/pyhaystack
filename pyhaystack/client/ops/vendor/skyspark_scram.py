@@ -195,10 +195,10 @@ class SkysparkScramAuthenticateOperation(state.HaystackOperation):
             if e.status != 401 and e.status != 303:
                 raise
             try:
-                server_response = e.headers.get("WWW-Authenticate")
-                if not server_response:
-                    server_response = e.headers.get("www-authenticate")
-                if not server_response:
+                header_response = e.headers.get("WWW-Authenticate")
+                if not header_response:
+                    header_response = e.headers.get("www-authenticate")
+                if not header_response:
                     raise Exception("WWW-Authenticate/www-authenticate not returned")
                 tab_header = header_response.split(",")
                 server_data = scram.regex_after_equal(tab_header[0])
